@@ -2,7 +2,7 @@
 #include <string.h>
 
 
-int magic_bytes(char *arr){
+void magic_bytes(char *arr){
 	char magic_numbers[4];
 	char elf_sign[4] = {0x7F,0x45,0x4C,0x46};
 	int cmp = 1;
@@ -18,11 +18,24 @@ int magic_bytes(char *arr){
                 	cmp = 0;
                	}
         }
-	return cmp;
+	if(cmp != 0){
+        	printf("\nfiletype: ELF");
+        }
 
 }
 
 
+void arch(char *arr){
+	if(arr[4] == 0x01){
+       		printf("\narchitecture: 32-bit");
+        }
+       	else if(arr[4] == 0x02){
+        	printf("\narchitecture: 64-bit");
+        }
+        else{
+        	printf("\ncan't recognize architecture");
+        }
+}
 
 int main(int argc, char *argv[]){
 	FILE *file;
@@ -35,21 +48,10 @@ int main(int argc, char *argv[]){
 			
 			fread(e_ident,1,16,file);
 			
-			cmp = magic_bytes(e_ident);
+			magic_bytes(e_ident);
 
-			if(cmp != 0){
-				printf("\nfiletype: ELF");
-			}
+			arch(e_ident);
 
-			if(e_ident[4] == 0x01){
-				printf("\narchitecture: 32-bit");
-			}
-			else if(e_ident[4] == 0x02){
-				printf("\narchitecture: 64-bit");
-			}
-			else{
-				printf("\ncan't recognize architecture");
-			}
 		}	
 		else{
 			fprintf(stderr,"no file given...");
