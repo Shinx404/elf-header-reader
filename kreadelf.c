@@ -38,7 +38,17 @@ int main(int argc, char *argv[]){
 			cmp = magic_bytes(e_ident);
 
 			if(cmp != 0){
-				printf("\nthis is an ELF!");
+				printf("\nfiletype: ELF");
+			}
+
+			if(e_ident[4] == 0x01){
+				printf("\narchitecture: 32-bit");
+			}
+			else if(e_ident[4] == 0x02){
+				printf("\narchitecture: 64-bit");
+			}
+			else{
+				printf("\ncan't recognize architecture");
 			}
 		}	
 		else{
