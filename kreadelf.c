@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
 		file = fopen(argv[1], "rb");
 		if(file != NULL){
 			
-			fread(magic_numbers,sizeof(int),4,file);
+			fread(magic_numbers,1,4,file);
 			
 			printf("filetype: ");
 			for(int i = 0; i < sizeof(magic_numbers)/sizeof(magic_numbers[0]);i++){
