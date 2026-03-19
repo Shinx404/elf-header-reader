@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 
-
 int main(int argc, char *argv[]){
 	FILE *file;
 	char magic_numbers[4];
 	char elf_sign[4] = {0x7F,0x45,0x4C,0x46};
 	int cmp = 1;
+	Elf64_Ehdr header;
 
 	if(argv[1] !=  NULL){
 		file = fopen(argv[1], "rb");
@@ -14,7 +14,7 @@ int main(int argc, char *argv[]){
 			
 			fread(magic_numbers,1,4,file);
 			
-			printf("filetype: ");
+			printf("magic bytes: ");
 			for(int i = 0; i < sizeof(magic_numbers)/sizeof(magic_numbers[0]);i++){
 				printf(" %x",magic_numbers[i]);
 				if(magic_numbers[i] != elf_sign[i]){
