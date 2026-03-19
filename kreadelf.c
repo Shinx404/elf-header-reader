@@ -1,26 +1,42 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc, char *argv[]){
-	FILE *file;
+
+int magic_bytes(char *arr){
 	char magic_numbers[4];
 	char elf_sign[4] = {0x7F,0x45,0x4C,0x46};
 	int cmp = 1;
-	Elf64_Ehdr header;
+
+	for(int i = 0; i < 4; i++){
+		magic_numbers[i] = arr[i];
+	}
+
+	printf("magic bytes: ");
+	for(int i = 0; i < sizeof(magic_numbers)/sizeof(magic_numbers[0]);i++){
+        	printf(" %x",magic_numbers[i]);
+                if(magic_numbers[i] != elf_sign[i]){
+                	cmp = 0;
+               	}
+        }
+	return cmp;
+
+}
+
+
+
+int main(int argc, char *argv[]){
+	FILE *file;
+	char e_ident[16];
+	int cmp;
 
 	if(argv[1] !=  NULL){
 		file = fopen(argv[1], "rb");
 		if(file != NULL){
 			
-			fread(magic_numbers,1,4,file);
+			fread(e_ident,1,16,file);
 			
-			printf("magic bytes: ");
-			for(int i = 0; i < sizeof(magic_numbers)/sizeof(magic_numbers[0]);i++){
-				printf(" %x",magic_numbers[i]);
-				if(magic_numbers[i] != elf_sign[i]){
-					cmp = 0;
-				}
-			}
+			cmp = magic_bytes(e_ident);
+
 			if(cmp != 0){
 				printf("\nthis is an ELF!");
 			}
