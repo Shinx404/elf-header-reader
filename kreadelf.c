@@ -37,20 +37,47 @@ void arch(char *arr){
         }
 }
 
+void endian(char *arr){
+	if(arr[5] == 0x00){
+		printf("\nbig endian");
+	}
+	else if(arr[5] == 0x01){
+		printf("\nlittle endian");
+	}
+	else{
+		printf("\ncould not find endian type..");
+	}
+}
+
+
 int main(int argc, char *argv[]){
 	FILE *file;
 	char e_ident[16];
 	int cmp;
 
-	if(argv[1] !=  NULL){
-		file = fopen(argv[1], "rb");
+	if(argc > 1){
+		if(argc >= 3){
+			file = fopen(argv[2], "rb");
+		}
+		else{
+			file = fopen(argv[1], "rb");
+		}
 		if(file != NULL){
-			
 			fread(e_ident,1,16,file);
-			
-			magicBytes(e_ident);
-
-			arch(e_ident);
+			if(argv[1] == "m"){
+				magicBytes(e_ident);
+			}
+			else if(argv[1] == "a"){
+				arch(e_ident);
+			}
+			else if(argv[1] == "e"){
+				endian(e_ident);
+			}
+			else{
+				magicBytes(e_ident);
+				arch(e_ident);
+				endian(e_ident);
+			}
 
 		}	
 		else{
