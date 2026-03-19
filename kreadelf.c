@@ -21,12 +21,13 @@ void magicBytes(char *arr){
 	if(cmp != 0){
         	printf("\nfiletype:\t\tELF");
         }
+	printf("\n");
 
 }
 
 
 void arch(char *arr){
-	printf("\narchitecture:\t\t");
+	printf("architecture:\t\t");
 	if(arr[4] == 0x01){
        		printf("32-bit");
         }
@@ -36,10 +37,11 @@ void arch(char *arr){
         else{
         	printf("N/A");
         }
+	printf("\n");
 }
 
 void endian(char *arr){
-	printf("\nendianness:\t\t");
+	printf("endianness:\t\t");
 	if(arr[5] == 0x00){
 		printf("big endian");
 	}
@@ -49,6 +51,7 @@ void endian(char *arr){
 	else{
 		printf("N/A");
 	}
+	printf("\n");
 }
 
 
@@ -56,6 +59,7 @@ int main(int argc, char *argv[]){
 	FILE *file;
 	char e_ident[16];
 	int cmp;
+	char options[] = {'m','a','e'};
 
 	if(argc > 1){
 		if(argc >= 3){
@@ -66,13 +70,13 @@ int main(int argc, char *argv[]){
 		}
 		if(file != NULL){
 			fread(e_ident,1,16,file);
-			if(argv[1] == "m"){
+			if(argv[1][1] == options[0]){
 				magicBytes(e_ident);
 			}
-			else if(argv[1] == "a"){
+			else if(argv[1][1] == options[1]){
 				arch(e_ident);
 			}
-			else if(argv[1] == "e"){
+			else if(argv[1][1] == options[2]){
 				endian(e_ident);
 			}
 			else{
