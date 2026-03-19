@@ -2,7 +2,7 @@
 #include <string.h>
 
 
-void magic_bytes(char *arr){
+void magicBytes(char *arr){
 	char magic_numbers[4];
 	char elf_sign[4] = {0x7F,0x45,0x4C,0x46};
 	int cmp = 1;
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
 			
 			fread(e_ident,1,16,file);
 			
-			magic_bytes(e_ident);
+			magicBytes(e_ident);
 
 			arch(e_ident);
 
