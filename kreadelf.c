@@ -11,41 +11,43 @@ void magicBytes(char *arr){
 		magic_numbers[i] = arr[i];
 	}
 
-	printf("magic bytes: ");
+	printf("magic bytes:\t\t");
 	for(int i = 0; i < sizeof(magic_numbers)/sizeof(magic_numbers[0]);i++){
-        	printf(" %x",magic_numbers[i]);
+        	printf("%x ",magic_numbers[i]);
                 if(magic_numbers[i] != elf_sign[i]){
                 	cmp = 0;
                	}
         }
 	if(cmp != 0){
-        	printf("\nfiletype: ELF");
+        	printf("\nfiletype:\t\tELF");
         }
 
 }
 
 
 void arch(char *arr){
+	printf("\narchitecture:\t\t");
 	if(arr[4] == 0x01){
-       		printf("\narchitecture: 32-bit");
+       		printf("32-bit");
         }
        	else if(arr[4] == 0x02){
-        	printf("\narchitecture: 64-bit");
+        	printf("64-bit");
         }
         else{
-        	printf("\ncan't recognize architecture");
+        	printf("N/A");
         }
 }
 
 void endian(char *arr){
+	printf("\nendianness:\t\t");
 	if(arr[5] == 0x00){
-		printf("\nbig endian");
+		printf("big endian");
 	}
 	else if(arr[5] == 0x01){
-		printf("\nlittle endian");
+		printf("little endian");
 	}
 	else{
-		printf("\ncould not find endian type..");
+		printf("N/A");
 	}
 }
 
