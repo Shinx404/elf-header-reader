@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 
 void magicBytes(char *arr){
@@ -60,7 +61,8 @@ int main(int argc, char *argv[]){
 	char e_ident[16];
 	int cmp;
 	char options[] = {'m','a','e'};
-
+	float runtime;
+	
 	if(argc > 1){
 		if(argc >= 3){
 			file = fopen(argv[2], "rb");
@@ -88,13 +90,20 @@ int main(int argc, char *argv[]){
 		}	
 		else{
 			fprintf(stderr,"no file given...");
+			runtime = (float)clock() / CLOCKS_PER_SEC;
+        		printf("\n\nruntime:\t\t%f ms", runtime*1000);
 			return -1;
 		}
 	}
 	else{
 		fprintf(stderr,"no argument given...");
+		runtime = (float)clock() / CLOCKS_PER_SEC;
+        	printf("\n\nruntime:\t\t%f ms", runtime*1000);
 		return -1;
 	}
 
+	runtime = (float)clock() / CLOCKS_PER_SEC;
+	printf("\n\nruntime:\t\t%f ms", runtime*1000);
+	
 	return 0;
 }
